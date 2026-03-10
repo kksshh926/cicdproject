@@ -9,10 +9,11 @@ env:
   BUCKET_NAME: cicd-codedeploy
   CODE_DEPLOY_APP_NAME: cicdapp
   DEPLOYMENT_GROUP_NAME: cicdapp_deploy
-  AWS_REGION: us-west-2
+  AWS_REGION: ap-northeast-2
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -40,15 +41,15 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: ap-northeast-2
 
     - name: Upload to S3
-      run: aws s3 cp ./$PROJECT_NAME.zip s3://$BUCKET_NAME/$PROJECT_NAME.zip
+      run: aws s3 cp ./$PROJECT_NAME.zip s3://cicd-codedeploy/$PROJECT_NAME.zip
 
     - name: Code Deploy
       run: |
         aws deploy create-deployment \
-        --application-name $CODE_DEPLOY_APP_NAME \
-        --deployment-group-name $DEPLOYMENT_GROUP_NAME \
-        --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME.zip \
-        --region $AWS_REGION
+        --application-name cicdapp \
+        --deployment-group-name cicdapp_deploy \
+        --s3-location bucket=cicd-codedeploy,bundleType=zip,key=cicdproject.zip \
+        --region ap-northeast-2
