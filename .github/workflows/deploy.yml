@@ -6,7 +6,7 @@ on:
 
 env:
   PROJECT_NAME: cicdproject
-  BUCKET_NAME: cicd-codedeploy
+  BUCKET_NAME: cicd-codedeploy-2037
   CODE_DEPLOY_APP_NAME: cicdapp
   DEPLOYMENT_GROUP_NAME: cicdapp_deploy
 
